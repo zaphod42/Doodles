@@ -1,0 +1,22 @@
+=head2 Tue Nov  2 21:16:22 2010: C<Module> L<Math::Random|Math::Random>
+
+=over 4
+
+=item *
+
+C<installed into: /Users/zaphod/programming/perl/network-sim/extlib/lib/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.71>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
