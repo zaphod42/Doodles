@@ -1,0 +1,16 @@
+#!/usr/bin/ruby
+
+def checkout_year(year)
+  id = `git rev-list -n 1 --before="#{year}-12-31" master 2>/dev/null`
+  `git checkout -q #{id} 2>&1`
+end
+
+def count_of_ruby
+  count = `sloccount .`.grep(/^ruby/).first
+  count.match(/:\s+(\d+)/)[1]
+end
+
+checkout_year(ARGV[0])
+puts "SLOC: #{count_of_ruby}"
+
+`git checkout master 2>/dev/null`

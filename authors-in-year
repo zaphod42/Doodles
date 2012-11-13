@@ -1,0 +1,44 @@
+#!/usr/bin/ruby
+
+def commits_in_year(year)
+  args = `git rev-parse --since='#{year}-01-01' --until='#{year}-12-31' master`.split("\n")
+
+  `git rev-list #{args.join(' ')}`.split("\n")
+end
+
+def author_of(commit_id)
+  `git show --format="%aN" #{commit_id}`.split("\n").first
+end
+
+def count(counts, id)
+  counts[id] += 1 
+  counts
+end
+
+def commit_histogram(commits)
+  counts = commits.inject(Hash.new(0)) do |counts, commits|
+    counts[commits] += 1
+    counts
+  end
+
+  puts "#Commits: (#Contributors)"
+  counts.keys.sort.each do |commits|
+    count = counts[commits]
+    puts "#{commits}: #{'*' * count} (#{count})"
+  end
+end
+
+author_stats = commits_in_year(ARGV[0]).
+  collect(&method(:author_of)).
+  inject(Hash.new(0), &method(:count))
+
+#author_stats.each do |name, count|
+#  puts "  #{name}: #{count}"
+#end
+
+puts "Total Contributors: #{author_stats.size}"
+puts "Total Commits: #{author_stats.values.inject(0, &:+)}"
+puts "Max Contributor: #{author_stats.values.max}"
+puts "Mean Contributor: #{author_stats.values.inject(0, &:+) / author_stats.size}"
+
+commit_histogram(author_stats.values)
