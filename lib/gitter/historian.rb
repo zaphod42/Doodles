@@ -6,18 +6,8 @@ module Gitter
       @git = git
     end
 
-    def all_history
-      author = nil
-      id = nil
-      @git.log do |line|
-        case line
-        when /^commit ([a-f0-9]+)$/
-          id = $1
-        when /^Author:\s*([^<]*)<[^>]*>$/
-          author = $1.chomp(' ')
-        end
-      end
-      [Gitter::Commit.new(author, id)]
+    def latest
+      Gitter::Commit.parse_next(@git.log)
     end
   end
 end

@@ -31,16 +31,14 @@ Date:   Thu Jan 24 18:11:44 2013 -0800
     git = Gitter::FakeGit.new(:log => single_commit_log)
     historian = Gitter::Historian.new(git)
 
-    assert_that historian.all_history,
-      includes_exactly(a_commit_by(name_of_commit_author))
+    assert_that historian.latest, a_commit_by(name_of_commit_author)
   end
 
   it "reads the commit id" do
     git = Gitter::FakeGit.new(:log => single_commit_log)
     historian = Gitter::Historian.new(git)
 
-    assert_that historian.all_history,
-      includes_exactly(a_commit_identified_by(commit_id))
+    assert_that historian.latest, a_commit_identified_by(commit_id)
   end
 
   def a_commit_by(name)
