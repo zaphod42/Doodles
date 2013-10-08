@@ -56,6 +56,3 @@ again milliseconds callback = do
 increase :: Float -> (Vector3 Float) -> (Vector3 Float)
 increase amount vector =
   (amount +) <$> vector
-
-sayHello angle = do
-  say white $ "Hello World! (" ++ (show angle) ++ ")"

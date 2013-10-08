@@ -9,9 +9,6 @@ type Universe = Set.Set Location
 instance (Eq Location) where
   (Location x1 y1) == (Location x2 y2) = x1 == x2 && y1 == y2 
 
---instance (Show Universe) where
---  show universe = Set.fold (\a -> \b -> a ++ ", " ++ b) "" $ Set.map (show) universe
-
 instance (Show Location) where
   show (Location x y) = "(" ++ (show x) ++ ", " ++ (show y) ++ ")"
 

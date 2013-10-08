@@ -1,4 +1,5 @@
-module Rendering (say, forceDisplay, rotateVector, red, green, blue, yellow, purple, cyan, white, xAxis, yAxis, zAxis, vertexAt, vectorTo) where
+module Rendering (forceDisplay, rotateVector, red, green, blue, yellow, purple, cyan, white, xAxis, yAxis, zAxis, vertexAt, vectorTo) where
+
 import Graphics.Rendering.OpenGL
 import Graphics.UI.GLUT
 import Control.Applicative
@@ -10,11 +11,6 @@ rotateVector (Vector3 xAngle yAngle zAngle) = do
 
 forceDisplay = postRedisplay Nothing
 
-say c text = do
-  color c
-  currentRasterPosition $= bottomLeftCorner
-  renderString TimesRoman24 text
-  
 bottomLeftCorner = Vertex4 (-1.0) (-1.0) 0.0 1.0
 
 red = rgb 1 0 0
