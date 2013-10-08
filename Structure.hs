@@ -45,14 +45,3 @@ follow location = do
     (interestingPoint location)
     (Vertex3 0.0 0.0 0.0)
     (Vector3 0.0 1.0 0.0)
-
-repeatedly milliseconds callback = do
-  addTimerCallback milliseconds $ again milliseconds callback
-
-again milliseconds callback = do
-  callback
-  addTimerCallback milliseconds $ again milliseconds callback
-
-increase :: Float -> (Vector3 Float) -> (Vector3 Float)
-increase amount vector =
-  (amount +) <$> vector

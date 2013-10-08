@@ -1,4 +1,4 @@
-module Rendering (forceDisplay, rotateVector, red, green, blue, yellow, purple, cyan, white, xAxis, yAxis, zAxis, vertexAt, vectorTo) where
+module Rendering (increase, repeatedly, forceDisplay, rotateVector, red, green, blue, yellow, purple, cyan, white, xAxis, yAxis, zAxis, vertexAt, vectorTo) where
 
 import Graphics.Rendering.OpenGL
 import Graphics.UI.GLUT
@@ -33,3 +33,14 @@ vectorTo x y z = Vector3 x y z
 
 vertexAt :: Float -> Float -> Float -> Vertex3 Float
 vertexAt x y z = Vertex3 x y z
+
+repeatedly milliseconds callback = do
+  addTimerCallback milliseconds $ again milliseconds callback
+
+again milliseconds callback = do
+  callback
+  addTimerCallback milliseconds $ again milliseconds callback
+
+increase :: Float -> (Vector3 Float) -> (Vector3 Float)
+increase amount vector =
+  (amount +) <$> vector
