@@ -14,15 +14,15 @@ main = do
   createWindow "CGOL"
   initialDisplayMode $= [DoubleBuffered, WithDepthBuffer]
   depthFunc $= Just Less
-  angle <- newIORef (Vector3 0.0 0.0 0.0)
-  universe <- newIORef glider
+  angle <- newIORef (Vector3 0.0 90.0 0.0)
+  universe <- newIORef acorn
   rotatingCube angle universe
   mainLoop
 
 rotatingCube angle universe = do
-  repeatedly 10 $ do
-    modifyIORef angle $ increase 0.1
-    forceDisplay
+--  repeatedly 10 $ do
+--    modifyIORef angle $ increase 0.1
+--    forceDisplay
   repeatedly 100 $ do
     modifyIORef universe $ nextGeneration
     forceDisplay
@@ -35,13 +35,13 @@ display angle universe = do
   preservingMatrix $ do 
     scale 0.2 0.2 (0.2::GLfloat)
     rotateVector rotationAngle
-    follow (anyPlace generation)
+    follow generation
     renderUniverse generation
   flush
 
-follow location = do
+follow generation = do
   --translate (interestingPoint location)
   lookAt
-    (interestingPoint location)
+    (interestingPoint generation)
     (Vertex3 0.0 0.0 0.0)
     (Vector3 0.0 1.0 0.0)

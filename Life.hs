@@ -1,4 +1,4 @@
-module Life (glider, nextGeneration, anyPlace, Location(Location)) where
+module Life (glider, acorn, nextGeneration, Location(Location), Life.div) where
 
 import qualified Data.Set as Set
 import qualified Data.Foldable as Foldable
@@ -12,6 +12,15 @@ instance (Eq Location) where
 instance (Show Location) where
   show (Location x y) = "(" ++ (show x) ++ ", " ++ (show y) ++ ")"
 
+instance (Num Location) where
+  (Location a b) + (Location c d) = (Location (a+c) (b+d))
+  (Location a b) * (Location c d) = (Location (a*c) (b*d))
+  signum (Location a b) = (Location (signum a) (signum b))
+  abs (Location a b) = (Location (abs a) (abs b))
+  fromInteger i = (Location (fromInteger i) (fromInteger i))
+
+div (Location a b) (Location c d) = (Location (fromInteger $ toInteger $ a `Prelude.div` c) (fromInteger $ toInteger $ b `Prelude.div` d))
+
 glider = Set.fromList [
     (Location 1 (-1)),
     (Location 0 (-1)),
@@ -20,7 +29,16 @@ glider = Set.fromList [
     (Location 0 1)
   ]
 
-anyPlace = Set.findMin
+acorn = Set.fromList [
+    (Location 0 0),
+    (Location (-1) 1),
+    (Location (-1) 2),
+    (Location (-1) 3),
+
+    (Location (-1) (-2)),
+    (Location (-1) (-3)),
+    (Location 1 (-2))
+  ]
 
 nextGeneration universe = keepLivingBasedOn universe $ (adjacentTo universe) `Set.union` universe 
 
