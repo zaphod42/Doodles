@@ -3,6 +3,7 @@ module Gitter
     attr_reader :author, :id
 
     def self.parse_next(input)
+      message = header(input) + message(input)
       author = nil
       id = nil
       input.each do |line|
@@ -19,6 +20,13 @@ module Gitter
     def initialize(author, id)
       @author = author
       @id = id
+    end
+
+  private
+
+    def self.header(input)
+      line = input.next
+      while line =~ /^\S/
     end
   end
 end
